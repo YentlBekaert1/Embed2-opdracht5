@@ -44,14 +44,14 @@ void main (int argc, char *argv[])
  GtkWidget *btnOUT1 = gtk_button_new_with_label ("Toggle GPIO 1");
  g_signal_connect (btnOUT1, "clicked", G_CALLBACK (controlOutput1), lbl);
 
- GtkWidget *btnOUT1 = gtk_button_new_with_label ("Toggle GPIO 2");
- g_signal_connect (btnOUT1, "clicked", G_CALLBACK (controlOutput2), NULL);
+ GtkWidget *btnOUT2 = gtk_button_new_with_label ("Toggle GPIO 2");
+ g_signal_connect (btnOUT2, "clicked", G_CALLBACK (controlOutput2), NULL);
 
  //create vbox = assigns the same amount of space to every widget it holds
  GtkWidget *box = gtk_vbox_new (FALSE, 5);
  gtk_box_pack_start (GTK_BOX (box), btnOUT1, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (box), btnOUT2, TRUE, TRUE, 0);
-  
+
  gtk_box_pack_start (GTK_BOX (box), lbl, TRUE, TRUE, 0);
  gtk_box_pack_start (GTK_BOX (box), btn, TRUE, TRUE, 0);
 
