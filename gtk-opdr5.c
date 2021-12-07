@@ -1,4 +1,9 @@
 #include <gtk/gtk.h>
+#include "PJ_RPI.h"
+
+//variables for toggeling outputs
+int state1 = 0;
+int state2 = 0;
 
 //callbalk function when closbutton is clicked
 void end_program (GtkWidget *wid, gpointer ptr)
@@ -9,22 +14,48 @@ void end_program (GtkWidget *wid, gpointer ptr)
 //callback when controll input button is clicked
 void controlOutput1 (GtkWidget *wid, gpointer ptr)
 {
- char buffer[30];
+ /*char buffer[30];
  int count = 1;
  sprintf (buffer, "Button pressed %d times", count);
- gtk_label_set_text (GTK_LABEL (ptr), buffer);
+ gtk_label_set_text (GTK_LABEL (ptr), buffer);*/
+ if(state1 == 0){
+     GPIO_SET = (1 << 17) ^ GPIO_SET;
+     state1 = 1;
+ }else{
+      state1 = 0;
+      GPIO_CLR = 1 << 17;
+ }
+
 }
 
 void controlOutput2 (GtkWidget *wid, gpointer ptr)
 {
- char buffer[30];
- int count = 1;
- sprintf (buffer, "Button pressed %d times", count);
- gtk_label_set_text (GTK_LABEL (ptr), buffer);
+ if(state2 == 0){
+     GPIO_SET = (1 << 27) ^ GPIO_SET;
+     state2 = 1;
+ }else{
+      GPIO_CLR = 1 << 27;
+      state2 = 0;
+ }
 }
 
 void main (int argc, char *argv[])
 {
+    //try to map gpio
+    if(map_peripheral(&gpio) == -1) 
+    {
+       	 	printf("Failed to map the physical GPIO registers into the virtual memory space.\n");
+        	
+    }
+
+    //set GPIO on Output
+    OUT_GPIO(17);
+    OUT_GPIO(27);
+    //set them initial on zero
+    GPIO_CLR = 1 << 17;
+    GPIO_CLR = 1 << 17;
+
+ 
  //init gtk
  gtk_init (&argc, &argv);
  //create window
@@ -41,10 +72,10 @@ void main (int argc, char *argv[])
 
 //add button to control IO
 //als we dan willen instellen dat we kunnen kiezen welke IO we aansturen dan moeten we dat lbl meegeven en gebruiken in de functie
- GtkWidget *btnOUT1 = gtk_button_new_with_label ("Toggle GPIO 1");
+ GtkWidget *btnOUT1 = gtk_button_new_with_label ("Toggle GPIO 17");
  g_signal_connect (btnOUT1, "clicked", G_CALLBACK (controlOutput1), lbl);
 
- GtkWidget *btnOUT2 = gtk_button_new_with_label ("Toggle GPIO 2");
+ GtkWidget *btnOUT2 = gtk_button_new_with_label ("Toggle GPIO 27");
  g_signal_connect (btnOUT2, "clicked", G_CALLBACK (controlOutput2), NULL);
 
  //create vbox = assigns the same amount of space to every widget it holds
