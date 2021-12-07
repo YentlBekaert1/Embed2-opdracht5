@@ -7,7 +7,15 @@ void end_program (GtkWidget *wid, gpointer ptr)
 }
 
 //callback when controll input button is clicked
-void controlOutput (GtkWidget *wid, gpointer ptr)
+void controlOutput1 (GtkWidget *wid, gpointer ptr)
+{
+ char buffer[30];
+ int count = 1;
+ sprintf (buffer, "Button pressed %d times", count);
+ gtk_label_set_text (GTK_LABEL (ptr), buffer);
+}
+
+void controlOutput2 (GtkWidget *wid, gpointer ptr)
 {
  char buffer[30];
  int count = 1;
@@ -32,12 +40,18 @@ void main (int argc, char *argv[])
  GtkWidget *lbl = gtk_label_new ("My label");
 
 //add button to control IO
- GtkWidget *btn2 = gtk_button_new_with_label ("Count button");
- g_signal_connect (btn2, "clicked", G_CALLBACK (controlOutput), lbl);
+//als we dan willen instellen dat we kunnen kiezen welke IO we aansturen dan moeten we dat lbl meegeven en gebruiken in de functie
+ GtkWidget *btnOUT1 = gtk_button_new_with_label ("Toggle GPIO 1");
+ g_signal_connect (btnOUT1, "clicked", G_CALLBACK (controlOutput1), lbl);
+
+ GtkWidget *btnOUT1 = gtk_button_new_with_label ("Toggle GPIO 2");
+ g_signal_connect (btnOUT1, "clicked", G_CALLBACK (controlOutput2), NULL);
 
  //create vbox = assigns the same amount of space to every widget it holds
  GtkWidget *box = gtk_vbox_new (FALSE, 5);
- gtk_box_pack_start (GTK_BOX (box), btn2, TRUE, TRUE, 0);
+ gtk_box_pack_start (GTK_BOX (box), btnOUT1, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (box), btnOUT2, TRUE, TRUE, 0);
+  
  gtk_box_pack_start (GTK_BOX (box), lbl, TRUE, TRUE, 0);
  gtk_box_pack_start (GTK_BOX (box), btn, TRUE, TRUE, 0);
 
