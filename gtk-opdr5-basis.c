@@ -110,9 +110,8 @@ void main(int argc, char *argv[])
     GtkWidget *btnShowInp = gtk_button_new_with_label("Show Inputs");
     g_signal_connect(btnShowInp, "clicked", G_CALLBACK(ShowInputs), lblInp);
 
-
+    //window layout
     //create box = assigns the same amount of space to every widget it holds/ to align
-
     //horizonal box to align output buttons horizonaly
     GtkWidget *boxOutp = gtk_hbox_new(FALSE, 20);
     gtk_box_pack_start(GTK_BOX(boxOutp), btnOUT1, TRUE, TRUE, 5);
@@ -126,7 +125,7 @@ void main(int argc, char *argv[])
     GtkWidget *boxCl = gtk_hbox_new(FALSE, 20);
     gtk_box_pack_start(GTK_BOX(boxCl), btn, TRUE, TRUE, 20);
 
-    //vertical box to align als horizontal boxes verticaly
+    //vertical box to align all horizontal boxes verticaly
     GtkWidget *boxTotal = gtk_vbox_new(FALSE, 5);
     gtk_box_pack_start(GTK_BOX(boxTotal), boxOutp, TRUE, TRUE, 15);
     gtk_box_pack_start(GTK_BOX(boxTotal), boxInp, TRUE, TRUE, 15);
